@@ -2,10 +2,13 @@ package se.omegapoint.academy.basket;
 
 import org.junit.Assert;
 import org.junit.Test;
+import se.omegapoint.academy.basket.items.Candy;
 
 import java.util.HashSet;
 
 public class BasketTest {
+
+    Basket basket;
 
     @Test
     public void addElementToEmptySet() {
@@ -27,5 +30,22 @@ public class BasketTest {
         set.remove(element);
         // Then the set is empty
         Assert.assertEquals("Remove element test failed.", 0, set.size());
+    }
+
+    @Test
+    public void addItemToBasket() {
+        basket = givenEmptyBask();
+        whenAddingAnItem();
+        Assert.assertEquals("Basket does not contain one item.", 1, basket.size());
+    }
+
+    private void whenAddingAnItem() {
+        Candy candy = new Candy("Dumle");
+        basket.add(candy);
+    }
+
+    private Basket givenEmptyBask() {
+        // Given an empty basket
+        return new Basket();
     }
 }
