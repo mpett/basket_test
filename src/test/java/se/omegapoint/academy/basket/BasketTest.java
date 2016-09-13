@@ -3,6 +3,7 @@ package se.omegapoint.academy.basket;
 import org.junit.Assert;
 import org.junit.Test;
 import se.omegapoint.academy.basket.items.Candy;
+import se.omegapoint.academy.basket.items.ConsoleLogger;
 
 import java.util.HashSet;
 
@@ -11,6 +12,7 @@ import static org.junit.Assert.assertEquals;
 public class BasketTest {
 
     Basket basket;
+    Candy candy;
 
     private final double PRICE_WITHOUT_TAX = 25.0;
     private final double TAX = 0.125;
@@ -45,21 +47,20 @@ public class BasketTest {
         assertEquals("Basket does not contain one item.", 1, basket.size());
     }
 
-    private Candy whenAddingAnItem() {
-        Candy candy = new Candy(PRICE_WITHOUT_TAX, TAX);
+    private void whenAddingAnItem() {
+        candy = new Candy(PRICE_WITHOUT_TAX, TAX);
         basket.add(candy);
-        return candy;
     }
 
     private Basket givenEmptyBasket() {
         // Given an empty basket
-        return new Basket();
+        return new Basket(new ConsoleLogger());
     }
 
     @Test
     public void getPriceWithTax() {
         basket = givenEmptyBasket();
-        Candy candy = whenAddingAnItem();
+        whenAddingAnItem();
         Assert.assertEquals(PRICE_WITH_TAX, candy.getPriceWithTax(), 0.0);
     }
 }
