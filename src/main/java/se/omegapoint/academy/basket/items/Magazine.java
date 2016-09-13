@@ -2,7 +2,8 @@ package se.omegapoint.academy.basket.items;
 
 import se.omegapoint.academy.basket.Item;
 
-public class Magazine implements Item {
-    public Magazine(final String name) {
+public class Magazine extends Item {
+    public Magazine(double price, double tax) {
+        super(price, tax);
     }
 }

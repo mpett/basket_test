@@ -6,9 +6,15 @@ import se.omegapoint.academy.basket.items.Candy;
 
 import java.util.HashSet;
 
+import static org.junit.Assert.assertEquals;
+
 public class BasketTest {
 
     Basket basket;
+
+    private final double PRICE_WITHOUT_TAX = 25.0;
+    private final double TAX = 0.125;
+    private final double PRICE_WITH_TAX = PRICE_WITHOUT_TAX * (1.0 + TAX);
 
     @Test
     public void addElementToEmptySet() {
@@ -17,7 +23,7 @@ public class BasketTest {
         // When adding an element
         set.add(new Integer(0));
         // THen the set contains one element
-        Assert.assertEquals("Add element to empty set test failed.", 1, set.size());
+        assertEquals("Add element to empty set test failed.", 1, set.size());
     }
 
     @Test
@@ -29,23 +35,31 @@ public class BasketTest {
         // When removing the element
         set.remove(element);
         // Then the set is empty
-        Assert.assertEquals("Remove element test failed.", 0, set.size());
+        assertEquals("Remove element test failed.", 0, set.size());
     }
 
     @Test
     public void addItemToBasket() {
-        basket = givenEmptyBask();
+        basket = givenEmptyBasket();
         whenAddingAnItem();
-        Assert.assertEquals("Basket does not contain one item.", 1, basket.size());
+        assertEquals("Basket does not contain one item.", 1, basket.size());
     }
 
-    private void whenAddingAnItem() {
-        Candy candy = new Candy("Dumle");
+    private Candy whenAddingAnItem() {
+        Candy candy = new Candy(PRICE_WITHOUT_TAX, TAX);
         basket.add(candy);
+        return candy;
     }
 
-    private Basket givenEmptyBask() {
+    private Basket givenEmptyBasket() {
         // Given an empty basket
         return new Basket();
+    }
+
+    @Test
+    public void getPriceWithTax() {
+        basket = givenEmptyBasket();
+        Candy candy = whenAddingAnItem();
+        Assert.assertEquals(PRICE_WITH_TAX, candy.getPriceWithTax(), 0.0);
     }
 }
